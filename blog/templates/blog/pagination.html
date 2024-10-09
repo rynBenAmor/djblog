@@ -1,0 +1,71 @@
+<style>
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    margin: 20px 0;
+}
+
+.pagination .step-links {
+    display: flex;
+    gap: 10px; /* Adds space between the links */
+}
+
+.pagination a {
+    color: #007bff; /* Bootstrap's primary blue */
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    background-color: #f8f9fa; /* Light gray */
+    border: 1px solid #dee2e6; /* Lighter border */
+    border-radius: 5px;
+}
+
+.pagination a[disabled] {
+    pointer-events: none;
+    opacity: 0.6; /* Make disabled links less visible */
+    border-color: #dee2e6; /* Light gray for disabled */
+}
+
+.pagination a.active {
+    background-color: #007bff;
+    color: white;
+    cursor: default;
+    border-color: #007bff;
+}
+
+</style>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page.has_previous %}
+        <a href="?page={{ page.previous_page_number }}">Previous</a>
+        {% else %}
+        <a href="#" disabled>Previous</a> <!-- Disabled state -->
+        {% endif %}
+        
+        <span class="current">
+            Page {{ page.number }} of {{ page.paginator.num_pages }}
+        </span>
+        
+        {% if page.has_next %}
+        <a href="?page={{ page.next_page_number }}">Next</a>
+        {% else %}
+        <a href="#" disabled>Next</a> <!-- Disabled state -->
+        {% endif %}
+    </span>
+</div>
