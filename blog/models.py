@@ -3,6 +3,7 @@ from django.db import models
 from django.utils import timezone
 
 from django.utils.text import slugify
+from taggit.managers import TaggableManager
 
 
 #custom manager
@@ -29,10 +30,17 @@ class Post(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=2, choices=Status, default=Status.DRAFT )
 
+    # Creates a Many-to-Many relationship with the Tag model
+    # through an intermediary model that stores Post and Tag foreign keys.
+    # including automatic tag creation and manipulation by tag names.
+    tags = TaggableManager()
+
     
     objects = models.Manager() # The default manager.
     published = PublishedManager() # Our custom manager.
 
+
+    
 
     class Meta:
         ordering = ['-publish']
@@ -48,21 +56,9 @@ class Post(models.Model):
     #auto uniquely slugify the title
     def save(self, *args, **kwargs):
         if not self.slug:
-            # Generate the initial slug
-            base_slug = slugify(self.title)
-            slug = base_slug
-            """
-            counter = 1
-
-            # Check if the slug already exists in the database
-            while Post.objects.filter(slug=slug).exists():
-                # If it exists, append a counter to make the slug unique
-                slug = f'{base_slug}-{counter}'
-                counter += 1
-            """
-
-            self.slug = slug
-
+            
+            self.slug = slugify(self.title)
+        #this line should always be executed regardles of if statments
         super().save(*args, **kwargs)
 
 
@@ -75,3 +71,22 @@ class Post(models.Model):
                                                 self.slug,
                                         ]
                     )
+    
+
+
+#comments(many) for post(one)
+class Comment(models.Model):
+    post = models.ForeignKey( Post, on_delete=models.CASCADE, related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+            ordering = ['created']
+            indexes = [ models.Index(fields=['created']), ]
+
+    def __str__(self):
+        return f'Comment by {self.name} on {self.post}'

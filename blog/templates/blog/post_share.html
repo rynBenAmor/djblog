@@ -1,0 +1,79 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Share a post{% endblock %}
+
+{% block content %}
+<div class="post-share-container">
+    {% if sent %}
+    <h1 class="success-message">E-mail successfully sent!</h1>
+    <p>
+        "{{ post.title }}" was successfully sent to {{ form.cleaned_data.to_email }}.
+    </p>
+    {% else %}
+    <h1 class="share-title">Share "{{ post.title }}" by e-mail</h1>
+    <form method="post" class="share-form">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <button type="submit" class="submit-button">Send e-mail</button>
+    </form>
+    {% endif %}
+</div>
+
+
+<style>
+    .post-share-container {
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .success-message {
+        font-size: 1.5rem;
+        color: green;
+    }
+
+    .share-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+
+    .share-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .share-form input[type="text"],
+    .share-form input[type="email"],
+    .share-form textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .submit-button {
+        padding: 10px 15px;
+        background-color: #007bff;
+        /* Blue background */
+        color: white;
+        /* White text */
+        border: none;
+        /* No border */
+        border-radius: 4px;
+        /* Rounded corners */
+        cursor: pointer;
+        /* Pointer cursor on hover */
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3;
+        /* Darker blue on hover */
+    }
+</style>
+
+
+{% endblock %}

@@ -3,14 +3,20 @@
 <html>
 
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon.ico' %}">
     <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    {% block extra_head %}{% endblock extra_head %}
+    <title>Blog| {% block title %}{% endblock %}</title>
+    
 </head>
 
 <body>
     <div id="content">
         {% block content %}
-        {% endblock %}
+        {% endblock content %}
     </div>
     <div id="sidebar">
         <h2>My blog</h2>

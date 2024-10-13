@@ -7,6 +7,7 @@
 
 /* Basic body styling */
 body {
+    min-height: 100dvh;
     font-family: Arial, sans-serif;
     line-height: 1.6;
     background-color: #f4f4f4;
@@ -17,6 +18,7 @@ body {
 /* Main content container */
 #content {
     background-color: #fff;
+    min-height: 100dvh;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -56,7 +58,9 @@ body::after {
 }
 
 /* Typography for blog posts */
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     color: #333;
     margin-bottom: 20px;
 }
@@ -83,11 +87,65 @@ a:hover {
 
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
-    #content, #sidebar {
+
+    #content,
+    #sidebar {
         width: 100%;
         float: none;
     }
+
     body {
         padding: 10px;
     }
+}
+
+
+/*comment form*/
+.comment-form-container {
+    width: 90%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+
+    margin: 2rem auto;
+}
+
+.comment-form-container label {
+    display: block;
+    color: #00063b;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.comment-form-container input, textarea {
+    width: 90%;
+    border-radius: 10px;
+    min-height: 40px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.comment-form-container input:focus, textarea:focus {
+    background-color: rgba(0, 123, 255, 0.2);
+    /* Light blue focus */
+    border-color: #007bff;
+    outline: none;
+}
+
+.comment-form-container button {
+    width: 100%;
+    color: white;
+    background-color: #28a745;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-form-container button:hover {
+    background-color: #218838;
+    /* Darken on hover */
 }
