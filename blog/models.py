@@ -61,7 +61,7 @@ class Post(models.Model):
         #this line should always be executed regardles of if statments
         super().save(*args, **kwargs)
 
-
+    #post detail url blog/detail/y/m/d/slug
     def get_absolute_url(self):
         from django.urls import reverse
         return reverse('blog:detail', args=[

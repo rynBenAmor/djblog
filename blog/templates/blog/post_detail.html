@@ -21,6 +21,26 @@
         <p>{{ post.body|linebreaks }}</p>
     </article>
 
+
+
+    <article>
+        <h2>Similar posts</h2>
+        <div class="card-container">
+            {% for post in similar_posts %}
+            <div class="card">
+                <a href="{{ post.get_absolute_url }}">
+                    <p>{{ post.title }}</p>
+                    <i class="fa fa-gratipay" aria-hidden="true"></i>
+                </a>
+            </div>
+            {% empty %}
+            <p>There are no similar posts yet</p>
+            {% endfor %}
+        </div>
+    </article>
+
+
+
     <!-- Share Link with Icon (SVG or FontAwesome) -->
     <footer class="post-footer">
         <a href="{% url 'blog:share' post.id %}" class="share-link">
@@ -51,7 +71,10 @@
 
 
     </footer>
+
+
 </div>
+
 
 
 <style>

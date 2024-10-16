@@ -4,6 +4,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+body,html{
+    overflow-x: hidden;
+}
 
 /* Basic body styling */
 body {
@@ -148,4 +151,58 @@ a:hover {
 .comment-form-container button:hover {
     background-color: #218838;
     /* Darken on hover */
+}
+
+
+/*list detail recommend card*/
+ /* General container styling */
+ article .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;        
+    text-align: center;
+}
+
+/* Individual card styling */
+article .card {
+    background-color: #f2ff00;
+    
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.33% - 32px);
+    /* Three cards per row on large screens */
+    max-width: calc(33.33% - 32px);
+}
+
+
+/* Styling for links inside the cards */
+article .card a {
+    text-decoration: none;
+    font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 2rem;
+}
+article .card i{
+    font-size: 2.5rem;
+}
+
+/* Small screens: adjust to wrap */
+@media (max-width: 768px) {
+    article .card {
+        flex: 1 1 calc(50% - 16px);
+        /* Two cards per row on medium screens */
+        max-width: calc(50% - 16px);
+    }
+}
+
+/* Extra small screens: one card per row */
+@media (max-width: 576px) {
+    article .card {
+        flex: 1 1 100%;
+        /* One card per row on small screens */
+        max-width: 100%;
+    }
 }
