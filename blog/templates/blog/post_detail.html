@@ -1,6 +1,7 @@
 {% extends "blog/base.html" %}
 {% load static %}
-{% block title %}{{ post.title }}{% endblock title %}
+{% load blog_tags %}
+{% block title %} {{ post.title }}{% endblock title %}
 
 {% block content %}
 
@@ -18,7 +19,7 @@
 
     <!-- Post Body -->
     <article class="post-body">
-        <p>{{ post.body|linebreaks }}</p>
+        <p>{{ post.body|markdown }}</p>
     </article>
 
 

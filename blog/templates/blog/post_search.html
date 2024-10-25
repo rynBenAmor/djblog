@@ -1,0 +1,128 @@
+{% extends "blog/base.html" %}
+{% load blog_tags %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div class="search-container">
+    {% if query %}
+    <h1>Posts containing "{{ query }}"</h1>
+    <h3>
+        {% with results.count as total_results %}
+        Found {{ total_results }} result{{ total_results|pluralize }}
+        {% endwith %}
+    </h3>
+    <div class="results-container">
+        {% for post in results %}
+        <div class="post-card">
+            <h4>
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </h4>
+            <p>{{ post.body|markdown|truncatewords_html:12 }}</p>
+        </div>
+        {% empty %}
+        <p class="no-results">There are no results for your query.</p>
+        {% endfor %}
+    </div>
+    <p class="search-again"><a href="{% url 'blog:search' %}">Search again</a></p>
+    {% else %}
+    <h1>Search for posts</h1>
+    <form method="get" class="search-form">
+        {{ form.as_p }}
+        <button type="submit"  class="search-button">Search</button>
+    </form>
+    {% endif %}
+</div>
+
+<style>
+    /* Search Container */
+.search-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Headings */
+.search-container h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #222;
+}
+
+.search-container h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: #666;
+}
+
+/* Results Container */
+.results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Post Card */
+.post-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.post-card:hover {
+    transform: scale(1.02);
+}
+
+/* Links */
+.search-container a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+.search-container a:hover {
+    text-decoration: underline;
+}
+
+/* No Results Message */
+.no-results {
+    color: #f44336;
+    font-weight: bold;
+}
+
+/* Search Again Link */
+.search-again {
+    margin-top: 20px;
+}
+
+/* Search Form */
+.search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-container input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-button {
+    padding: 10px;
+    background: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-button:hover {
+    background: #0056b3;
+}
+</style>
+
+{% endblock %}

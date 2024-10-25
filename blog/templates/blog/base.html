@@ -7,30 +7,47 @@
 
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon.ico' %}">
     <link href="{% static 'css/blog.css' %}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {% block extra_head %}{% endblock extra_head %}
-    <title>Blog| {% block title %}{% endblock %}</title>
+    <title>Blog | {% block title %}{% endblock %}</title>
 
 </head>
 
 <body>
+
     <div id="content">
         {% block content %}
         {% endblock content %}
     </div>
+
     <div id="sidebar">
-        <h2>My blog</h2>
+        <a href="{% url 'blog:list' %}">
+            <h2>My blog</h2>
+        </a>
+
+
+        <a href="{% url 'blog:search' %}">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            Search
+        </a>
+
         <p>A total of <strong>{% total_posts %}</strong> has been posted </p>
 
-        <div style="background: linear-gradient(to right, rgb(230, 230, 253) , rgb(228, 184, 240));" >
+        <div style="background: linear-gradient(to right, rgb(230, 230, 253) , rgb(228, 184, 240));">
             <h3>Latest posts</h3>
             {% show_latest_posts 3 %}
         </div>
 
         <div class="commented-posts-container">
+            <h3>
+                <a href="{% url 'blog:feed' %}" style="color:bisque">
+                    Subscribe to my RSS feed
+                </a>
+            </h3>
             <h2>Top 3 Most Commented Posts:</h2>
             <ol class="commented-posts-list">
                 {% get_most_commented_posts as most_commented %}
@@ -45,13 +62,12 @@
             </ol>
             <style>
                 .commented-posts-container {
-                    background: linear-gradient(217deg, rgba(255,0,0,.8), rgba(255,0,0,0) 70.71%),
-                                linear-gradient(127deg, rgba(0,255,0,.8), rgba(0,255,0,0) 70.71%),
-                                linear-gradient(336deg, rgba(0,0,255,.8), rgba(0,0,255,0) 70.71%);
+                    background: linear-gradient(217deg, rgba(255, 0, 0, .8), rgba(255, 0, 0, 0) 70.71%),
+                        linear-gradient(127deg, rgba(0, 255, 0, .8), rgba(0, 255, 0, 0) 70.71%),
+                        linear-gradient(336deg, rgba(104, 104, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
                     /* Light background */
                     border: 1px solid #ddd;
-                    /* Light border */
-                    border-radius: 8px;
+
                     /* Rounded corners */
                     padding: 20px;
                     /* Inner padding */
@@ -60,12 +76,12 @@
                     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                     /* Subtle shadow */
                 }
-                
+
 
                 .commented-posts-list {
-                    list-style-type:upper-roman;                
-                  
-                 
+                    list-style-type: upper-roman;
+
+
                 }
 
                 .commented-post-item {
@@ -92,6 +108,7 @@
         </div>
 
     </div>
+
 </body>
 
 </html>

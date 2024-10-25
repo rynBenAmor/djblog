@@ -36,7 +36,7 @@ from django.utils.safestring import mark_safe
 
 @register.filter(name='markdown')
 def markdown_format(text):
-    return mark_safe(markdown.markdown(text))
+     return mark_safe(markdown.markdown(text, extensions=['fenced_code', 'tables']))
 
 """
 @register.simple_tag()

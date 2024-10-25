@@ -21,10 +21,9 @@ from decouple import config
 
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG')
+DEBUG = not config('PRODUCTION', default=False, cast=bool)# !PRODUCTION
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #3rdparty
     'taggit',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.postgres',
     #myapps
     'blog',
 ]
@@ -76,12 +78,34 @@ WSGI_APPLICATION = 'a_djblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+# Reading database type from .env
+DBTYPE = config('DBTYPE')
+
+if DBTYPE == 'sqlite':  # Switch to SQLite
+    print('Using SQLite database')  # Debugging print
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:  # Switch to PostgreSQL
+    print('Using PostgreSQL database')  # Debugging print
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('DB_NAME'),
+            'USER': config('DB_USER'),
+            'PASSWORD': config('DB_PASSWORD'),
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT', default='5432'),
+        }
+    }
+
+print(f"DBTYPE: {DBTYPE}")  # Debugging output
+print(f"DATABASES: {DATABASES}")  # Debugging output
+
 
 
 # Password validation
@@ -126,9 +150,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # Directory where `collectstatic` gather
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#sitemap
+SITE_ID = 1
 
 
-# ...
 # Email server configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 

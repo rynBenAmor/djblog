@@ -1,0 +1,208 @@
+/* Reset some default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body,html{
+    overflow-x: hidden;
+}
+
+/* Basic body styling */
+body {
+    min-height: 100dvh;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+/* Main content container */
+#content {
+    background-color: #fff;
+    min-height: 100dvh;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 70%;
+    float: left;
+}
+
+/* Sidebar styling */
+#sidebar {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 25%;
+    float: right;
+    text-align: center;
+}
+
+#sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+#sidebar p {
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Clear floats */
+body::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Typography for blog posts */
+h1,
+h2,
+h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+p {
+    margin-bottom: 15px;
+    line-height: 1.8;
+}
+
+/* Links */
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+
+    #content,
+    #sidebar {
+        width: 100%;
+        float: none;
+    }
+
+    body {
+        padding: 10px;
+    }
+}
+
+
+/*comment form*/
+.comment-form-container {
+    width: 90%;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+
+    margin: 2rem auto;
+}
+
+.comment-form-container label {
+    display: block;
+    color: #00063b;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.comment-form-container input, textarea {
+    width: 90%;
+    border-radius: 10px;
+    min-height: 40px;
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 1rem;
+}
+
+.comment-form-container input:focus, textarea:focus {
+    background-color: rgba(0, 123, 255, 0.2);
+    /* Light blue focus */
+    border-color: #007bff;
+    outline: none;
+}
+
+.comment-form-container button {
+    width: 100%;
+    color: white;
+    background-color: #28a745;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.comment-form-container button:hover {
+    background-color: #218838;
+    /* Darken on hover */
+}
+
+
+/*list detail recommend card*/
+ /* General container styling */
+ article .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;        
+    text-align: center;
+}
+
+/* Individual card styling */
+article .card {
+    background-color: #f2ff00;
+    
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.33% - 32px);
+    /* Three cards per row on large screens */
+    max-width: calc(33.33% - 32px);
+}
+
+
+/* Styling for links inside the cards */
+article .card a {
+    text-decoration: none;
+    font-family: "Brush Script MT", "Lucida Handwriting", cursive;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+    font-size: 2rem;
+}
+article .card i{
+    font-size: 2.5rem;
+}
+
+/* Small screens: adjust to wrap */
+@media (max-width: 768px) {
+    article .card {
+        flex: 1 1 calc(50% - 16px);
+        /* Two cards per row on medium screens */
+        max-width: calc(50% - 16px);
+    }
+}
+
+/* Extra small screens: one card per row */
+@media (max-width: 576px) {
+    article .card {
+        flex: 1 1 100%;
+        /* One card per row on small screens */
+        max-width: 100%;
+    }
+}

@@ -6,6 +6,8 @@ from .forms import EmailPostForm, CommentForm
 from django.core.mail import send_mail
 from django.views.decorators.http import require_POST
 from django.db.models import Count
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from .forms import SearchForm
 
 
 def post_list(request, tag_slug=None):    
@@ -155,14 +157,13 @@ def post_comment(request, post_id):
     post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
     comment = None
 
-    form = CommentForm(request.POST)
+    form = CommentForm(request.POST)#initiate
+
     if form.is_valid():
         comment = form.save(commit=False)#not yet, we have the fk field missing
         #always assing the whole object , django will deal with the fk id thing
         comment.post = post
-        comment.save()
-    else:
-        form = CommentForm(instance=request.POST)
+        comment.save() 
     
     context={
         'post':post,
@@ -172,3 +173,38 @@ def post_comment(request, post_id):
 
     return render(request, 'blog/comment.html', context)
     
+
+
+
+#alternatively we can use TrigramSimilarity
+def post_search(request):
+    # Initialize empty form and results
+    form = SearchForm()
+    results = []
+    query = request.GET.get('query', '').strip()  # Get 'query' from GET parameters
+
+    if query:
+        # Populate form with the query data from GET request
+        form = SearchForm({'query': query})
+
+        # Prepare search tools for full-text search in PostgreSQL
+        search_vector = SearchVector('title', 'body')  # Look at body and title for correspondence
+        search_query = SearchQuery(query, config='english')  # Returns the searched term + synonyms/derivatives(supports lots of languages)
+        search_rank = SearchRank(search_vector, search_query)  # Rank results based on relevance
+
+        # Annotate posts with search data and rank, then filter and sort by relevance
+        results = (
+            Post.objects.annotate(
+                search=search_vector,
+                rank=search_rank
+            ).filter(search=search_query).order_by('-rank')  # Sort by rank (highest first)
+        )
+
+    # Pass form, query, and results to the template
+    context = {
+        'form': form,
+        'query': query,
+        'results': results,
+    }
+
+    return render(request, 'blog/post_search.html', context)
